@@ -1,0 +1,7 @@
+{
+    "name": "com.rybakatya.levelstreamer",
+    "version": "1.0.0",
+    "displayName": "Level Streamer",
+    "description": "Level streaming made easy!",
+    "unity": "2021.3"
+}
