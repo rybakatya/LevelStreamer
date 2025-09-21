@@ -1,7 +1,6 @@
 # OpenWorldToolkit.LevelStreaming
 
-A Unity **grid-based level streaming system** built on top of  
-[OpenWorldToolkit.SpatialHash](../SpatialHash).  
+A Unity **grid-based level streaming system**
 It bakes your scene into cell prefabs and streams them in/out at runtime using **Unity Addressables** as the player moves.
 
 This README matches the provided API:
@@ -19,7 +18,8 @@ This README matches the provided API:
 ## ✨ Requirements
 - Unity 2020 or newer
 - **Unity Addressables** package
-- [OpenWorldToolkit.SpatialHash](../SpatialHash) (provides `SpatialCell` and `ISpatialItem`)
+- [SpatialHash](https://github.com/rybakatya/SpatialHash)
+- [WindowTabSystem](https://github.com/rybakatya/WindowTabSystem)  
 
 ---
 
@@ -34,35 +34,6 @@ Install with **Package Manager (UPM)**.
    ```
    https://github.com/<org-or-user>/OpenWorldToolkit.LevelStreaming.git
    ```
-   - To lock to a version:
-     ```
-     https://github.com/<org-or-user>/OpenWorldToolkit.LevelStreaming.git#v1.0.0
-     ```
-
-### Option B — `manifest.json`
-Add to your project manifest:
-```json
-{
-  "dependencies": {
-    "com.openworldtoolkit.levelstreaming": "https://github.com/<org-or-user>/OpenWorldToolkit.LevelStreaming.git#v1.0.0"
-  }
-}
-```
-
-### Option C — Local tarball
-If you export a `.tgz` with a valid `package.json`:
-- **Package Manager → + → Add package from tarball…**, or
-- Reference in `manifest.json`:
-  ```json
-  {
-    "dependencies": {
-      "com.openworldtoolkit.levelstreaming": "file:../packages/openworldtoolkit.levelstreaming-1.0.0.tgz"
-    }
-  }
-  ```
-
-> Replace `<org-or-user>` with your actual GitHub org/user.
-
 ---
 
 ## 🚀 Quick Start
@@ -82,34 +53,11 @@ If you export a `.tgz` with a valid `package.json`:
      - Create a `CellsRoot` container.
      - Save each cell group as a prefab in `SceneFolder/Chunks/`.
      - Mark each prefab as an **Addressable** asset and add it to the `assets` list of your settings asset.
-
-Your `LevelStreamerSettingsAsset` now contains:
-```csharp
-public int cellSize;
-public List<StreamableAssetReference> assets; // position + AssetReference
-```
-
 ---
 
 ### 2️⃣ Add the Runtime Manager
 
 Attach `LevelStreamerManager` to an empty GameObject in your scene:
-
-```csharp
-using UnityEngine;
-using OpenWorldToolkit.LevelStreaming;
-
-public class Setup : MonoBehaviour
-{
-    public LevelStreamerManager manager;
-
-    void Awake()
-    {
-        // assign your created settings asset in the inspector
-    }
-}
-```
-
 - Assign the baked `LevelStreamerSettingsAsset` to **Streamer Settings** in the inspector.
 
 At runtime (or in Play Mode with `ExecuteAlways`):
@@ -162,28 +110,6 @@ At runtime (or in Play Mode with `ExecuteAlways`):
 - Back up your scene before baking (baker moves objects into new parents).
 - Prefabs are stored under `SceneFolder/Chunks/` by default; keep them version-controlled.
 - Use **Unity Addressables Build** workflow to bundle and distribute cell prefabs for your target platform.
-
----
-
-## 🧪 Minimal Runtime Example
-
-```csharp
-using UnityEngine;
-using OpenWorldToolkit.LevelStreaming;
-
-public class DemoSetup : MonoBehaviour
-{
-    public LevelStreamerManager streamerManager;
-
-    void Start()
-    {
-        // Ensure Addressables are initialized
-        // StreamerManager will handle loading/unloading cells automatically
-    }
-}
-```
-
-Play the scene, move the camera, and watch cells load/unload seamlessly.
 
 ---
 
