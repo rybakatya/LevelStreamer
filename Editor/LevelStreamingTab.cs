@@ -270,5 +270,15 @@ namespace OpenWorldToolkit.LevelStreaming.Editor
 
             return entry;
         }
+
+        public override void Open()
+        {
+           // throw new NotImplementedException();
+        }
+
+        public override void Close()
+        {
+            //throw new NotImplementedException();
+        }
     }
 }
